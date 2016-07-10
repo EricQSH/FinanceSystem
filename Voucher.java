@@ -18,6 +18,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
+import com.mysql.jdbc.Connection;
+
 public class Voucher {
 
 	JFrame frame;
@@ -46,14 +48,18 @@ public class Voucher {
 	/**
 	 * Create the application.
 	 */
+	public Voucher(Connection conn, int UserNo) {
+		initialize(conn, UserNo);
+	}
 	public Voucher() {
-		initialize();
+		initialize(null, -1);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(Connection conn, int UserNo) {
+		// 加个判断 是否登陆 是否连接数据库
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1000, 510);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

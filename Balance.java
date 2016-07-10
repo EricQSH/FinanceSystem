@@ -32,6 +32,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 
+import com.mysql.jdbc.Connection;
+
 public class Balance {
 
 	JFrame frame;
@@ -58,14 +60,17 @@ public class Balance {
 	/**
 	 * Create the application.
 	 */
+	public Balance(Connection conn, int UserNo) {
+		initialize(conn, UserNo);
+	}
 	public Balance() {
-		initialize();
+		initialize(null, -1);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(final Connection conn, final int UserNo) {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 482);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

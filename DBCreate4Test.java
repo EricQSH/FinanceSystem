@@ -126,7 +126,7 @@ public class DBCreate4Test
 	    		int userno = rs.getInt(1);
 	    		String password = rs.getString(2);
 	    		String username = rs.getString(3);
-	    		// System.out.print(userno + " " + password + " " + username + "\n");
+	    		System.out.print(userno + " " + password + " " + username + "\n");
 	    	}
 	    	rs.close();
 	    	System.out.print(tableName + " Data query succeed!");

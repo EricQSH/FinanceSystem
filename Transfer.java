@@ -5,6 +5,8 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 
+import com.mysql.jdbc.Connection;
+
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -32,14 +34,18 @@ public class Transfer {
 	/**
 	 * Create the application.
 	 */
+	public Transfer(Connection conn, int UserNo) {
+		initialize(conn, UserNo);
+	}
 	public Transfer() {
-		initialize();
+		initialize(null, -1);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(final Connection conn, final int UserNo) {
+		// 加个判断 是否登陆 是否连接数据库
 		frame = new JFrame();
 		frame.setBounds(100, 100, 436, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,7 +55,7 @@ public class Transfer {
 		btnBalance.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		btnBalance.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Balance balance=new Balance();
+				Balance balance=new Balance(conn, UserNo);
 				balance.frame.setVisible(true);
 				frame.setVisible(false);
 			}
@@ -61,7 +67,7 @@ public class Transfer {
 		btnAccount.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		btnAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Account account=new Account();
+				Account account=new Account(conn, UserNo);
 				account.frame.setVisible(true);
 				frame.setVisible(false);
 			}

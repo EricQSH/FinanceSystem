@@ -82,6 +82,48 @@ public class Hi {
 		txtPass.setEchoChar('*');
 		frame.getContentPane().add(txtPass);
 		
+		JButton btnLogin = new JButton("Log in");
+		btnLogin.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		btnLogin.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) {
+				//获取账号与密码
+				DBConnect dbconn = new DBConnect();
+				Connection conn = (Connection) dbconn.conn;
+				try 
+				{	
+					ResultSet rs = dbconn.Query(conn, "Login");
+					while(rs.next())
+					{
+						int userno = rs.getInt(1);
+						String password = rs.getString(2);
+						String username = rs.getString(3);
+						//System.out.print(userno + " " + password + " " + username + " indb\n");
+						//System.out.print(txtUser.getText() + " " + txtPass.getText() + " " + username + " input\n" );
+						//if ("Qi".equals(txtUser.getText()) && "123456".equals(txtPass.getText()))
+						if (txtUser.getText().equals(userno+"") && password.equals(txtPass.getText()))
+						{
+							System.out.print("Add a \"Login Success!\" dialog!\n");
+							Transfer transfer=new Transfer(conn, userno);
+							transfer.frame.setVisible(true);
+							frame.setVisible(false);
+						}
+						else System.out.print("Add a \"Wrong Password!\" dialog!\n");
+					}
+					rs.close();
+				} 
+				catch (SQLException e) 
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//else frame.setTitle(txtPass.getText());
+				
+			}
+		});
+		btnLogin.setBounds(113, 184, 93, 23);
+		frame.getContentPane().add(btnLogin);
+
 		JButton btnExit = new JButton("Exit");
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -90,28 +132,6 @@ public class Hi {
 			}
 		});
 		
-		//获取账号与密码
-		Connection conn = (Connection) DBConnect.GetConn();
-		
-		
-		JButton btnLogin = new JButton("Log in");
-		btnLogin.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		btnLogin.addActionListener(new ActionListener() 
-		{
-			public void actionPerformed(ActionEvent arg0) {
-				Transfer transfer=new Transfer();
-				w
-				if ("Qi".equals(txtUser.getText()) && "123456".equals(txtPass.getText()))
-				{
-					transfer.frame.setVisible(true);
-					frame.setVisible(false);
-				}
-				//else frame.setTitle(txtPass.getText());
-				
-			}
-		});
-		btnLogin.setBounds(113, 184, 93, 23);
-		frame.getContentPane().add(btnLogin);
 		btnExit.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		btnExit.setBounds(243, 183, 93, 23);
 		frame.getContentPane().add(btnExit);

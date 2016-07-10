@@ -2,7 +2,9 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -10,6 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+
+import com.mysql.jdbc.Connection;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -44,14 +49,18 @@ public class Account {
 	/**
 	 * Create the application.
 	 */
+	public Account(Connection conn, int UserNo) {
+		initialize(conn, UserNo);
+	}
 	public Account() {
-		initialize();
+		initialize(null, -1);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(final Connection conn, final int UserNo) {
+		// 加个判断 是否登陆 是否连接数据库
 		frame = new JFrame();
 		frame.setBounds(100, 100, 500, 430);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -142,7 +151,7 @@ public class Account {
 		JButton btnAcctVou = new JButton("Account Voucher");
 		btnAcctVou.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AcctVoucher acctVoucher=new AcctVoucher();
+				AcctVoucher acctVoucher=new AcctVoucher(conn, UserNo);
 				acctVoucher.frame.setVisible(true);
 				frame.setVisible(false);
 			}
@@ -153,7 +162,7 @@ public class Account {
 		JButton btnOriginalVou = new JButton("Original Voucher");
 		btnOriginalVou.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Voucher voucher=new Voucher();
+				Voucher voucher=new Voucher(conn, UserNo);
 				voucher.frame.setVisible(true);
 				frame.setVisible(false);
 			}
@@ -185,6 +194,7 @@ public class Account {
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.setVisible(false);
+				System.exit(0);
 			}
 		});
 		btnExit.setBounds(355, 333, 80, 23);

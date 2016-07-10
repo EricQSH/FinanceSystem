@@ -2,7 +2,7 @@ import java.sql.*;
 
 public class DBConnect 
 {
-	static Connection conn;
+	public Connection conn;
 	
 	public DBConnect()
 	{
@@ -14,17 +14,17 @@ public class DBConnect
 	    try 
 	    {             // 加载驱动程序            
 	    	Class.forName(driver);
-	    	Connection conn = DriverManager.getConnection(url, user, password); // 连续数据库            
+	    	conn = DriverManager.getConnection(url, user, password); // 连续数据库            
     		if(!conn.isClosed())  System.out.println("Succeeded connecting to the Database!");
-	    	Statement statement = conn.createStatement();// statement用来执行SQL语句  
-	    	/* String sql = "select * from student"; // 要执行的SQL语句   
+    		/* Statement statement = conn.createStatement();// statement用来执行SQL语句  
+	    	String sql = "select * from student"; // 要执行的SQL语句   
 	    	ResultSet rs = statement.executeQuery(sql); // 结果集  
 	    	while(rs.next())
 	    	{                 
 	    	}
 	    	rs.close();            
 	    	*/
-	    	conn.close();
+	    	//conn.close();
 	    } 
 	    catch(ClassNotFoundException e) 
 	    {
@@ -40,26 +40,25 @@ public class DBConnect
 	    	e.printStackTrace();
 	    }
 	}
-	public static Connection GetConn()
-	{
-		return conn;
-	}
 	
 	public static ResultSet Query(Connection conn, String query_sql)
 	{
+		ResultSet rs = null;
 		try
 		{
 			String sql = "select * from " + query_sql; // 要执行的SQL语句   
 			String tableName = query_sql;// .substring(0, query_sql.indexOf('('));
-	    	rs = statement.executeQuery(sql); // 结果集
-	    	while(rs.next())
+			Statement statement = conn.createStatement();
+			rs = statement.executeQuery(sql); // 结果集
+	    	/*
 	    	{
 	    		int userno = rs.getInt(1);
 	    		String password = rs.getString(2);
 	    		String username = rs.getString(3);
-	    		// System.out.print(userno + " " + password + " " + username + "\n");
+	    		System.out.print(userno + " " + password + " " + username + "\n");
 	    	}
 	    	System.out.print(tableName + " Data query succeed!");
+	    	*/
 	    	
 		}
 	    catch (SQLException e) 
@@ -71,6 +70,10 @@ public class DBConnect
 	    	e.printStackTrace();
 	    }
 		return rs;
+	}
+	protected void finalize() throws SQLException
+	{
+		this.conn.close();
 	}
 
 }

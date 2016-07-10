@@ -10,6 +10,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 
+import com.mysql.jdbc.Connection;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -37,14 +39,18 @@ public class AcctVoucher {
 	/**
 	 * Create the application.
 	 */
+	public AcctVoucher(Connection conn, int UserNo) {
+		initialize(conn, UserNo);
+	}
 	public AcctVoucher() {
-		initialize();
+		initialize(null, -1);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(Connection conn, int UserNo) {
+		// 加个判断 是否登陆 是否连接数据库
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1200, 450);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
