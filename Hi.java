@@ -5,6 +5,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 import com.mysql.jdbc.Connection;
@@ -87,7 +88,7 @@ public class Hi {
 		btnLogin.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) {
-				//»ñÈ¡ÕËºÅÓëÃÜÂë
+				//Â»Ã±ÃˆÂ¡Ã•Ã‹ÂºÃ…Ã“Ã«ÃƒÃœÃ‚Ã«
 				DBConnect dbconn = new DBConnect();
 				Connection conn = (Connection) dbconn.conn;
 				try 
@@ -103,12 +104,17 @@ public class Hi {
 						//if ("Qi".equals(txtUser.getText()) && "123456".equals(txtPass.getText()))
 						if (txtUser.getText().equals(userno+"") && password.equals(txtPass.getText()))
 						{
-							System.out.print("Add a \"Login Success!\" dialog!\n");
+							//System.out.print("Add a \"Login Success!\" dialog!\n");
 							Transfer transfer=new Transfer(conn, userno);
 							transfer.frame.setVisible(true);
 							frame.setVisible(false);
 						}
-						else System.out.print("Add a \"Wrong Password!\" dialog!\n");
+						else //System.out.print("Add a \"Wrong Password!\" dialog!\n");
+						{
+							JOptionPane.showMessageDialog(null, "Please enter the correct information","Wrong Infomation", JOptionPane.ERROR_MESSAGE);
+							txtUser.setText("");
+							txtPass.setText("");
+						}
 					}
 					rs.close();
 				} 
