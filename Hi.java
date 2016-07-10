@@ -69,7 +69,7 @@ public class Hi {
 		
 		txtUser = new JTextField();
 		txtUser.setBounds(171, 77, 139, 21);
-		txtUser.setText("111111"); //Ä¬ÈÏÕËºÅ
+		txtUser.setText("111111"); //Ã„Â¬ÃˆÃÃ•Ã‹ÂºÃ…
 		frame.getContentPane().add(txtUser);
 		txtUser.setColumns(10);
 		
@@ -82,7 +82,7 @@ public class Hi {
 		txtPass.setColumns(10);
 		txtPass.setBounds(171, 122, 139, 21);
 		txtPass.setEchoChar('*');
-		txtPass.setText("r00t_User"); //Ä¬ÈÏÃÜÂë
+		txtPass.setText("r00t_User"); //Ã„Â¬ÃˆÃÃƒÃœÃ‚Ã«
 		frame.getContentPane().add(txtPass);
 		
 		JButton btnLogin = new JButton("Log in");
@@ -90,7 +90,7 @@ public class Hi {
 		btnLogin.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) {
-				//»ñÈ¡ÕËºÅÓëÃÜÂë
+				//Â»Ã±ÃˆÂ¡Ã•Ã‹ÂºÃ…Ã“Ã«ÃƒÃœÃ‚Ã«
 				DBConnect dbconn = new DBConnect();
 				Connection conn = (Connection) dbconn.conn;
 				try 
@@ -117,6 +117,7 @@ public class Hi {
 							JOptionPane.showMessageDialog(null, "Please enter the correct information","Wrong Infomation", JOptionPane.ERROR_MESSAGE);
 							txtUser.setText("");
 							txtPass.setText("");
+							break;
 						}
 					}
 					rs.close();
