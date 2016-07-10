@@ -7,7 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-
+import java.awt.Image;
 import com.mysql.jdbc.Connection;
 
 import java.beans.PropertyChangeListener;
@@ -151,15 +151,29 @@ public class Hi {
 		btnExit.setBounds(243, 183, 93, 23);
 		frame.getContentPane().add(btnExit);
 		
-		JButton btnPasswordEye = new JButton("");
-		btnPasswordEye.setIcon(new ImageIcon("/Users/apple/Documents/workspace/FinanceSystemSim_v1.0/src/45eccc1b72788a4ef9dc30eb96a6c64e.png"));
-		btnPasswordEye.setBounds(315, 85, 129, 86);
+		final JButton btnPasswordEye = new JButton("");
+		//
+		//icon = new ImageIcon("./src/45eccc1b72788a4ef9dc30eb96a6c64e.png");
+		final ImageIcon iconA = new ImageIcon(new ImageIcon("./src/45eccc1b72788a4ef9dc30eb96a6c64e.png").getImage().getScaledInstance(50, 45, Image.SCALE_SMOOTH));
+		btnPasswordEye.setIcon(new ImageIcon(iconA.getImage().getScaledInstance(2, 1, Image.SCALE_SMOOTH)));
+		btnPasswordEye.setBounds(311, 122, 33, 29);
 		frame.getContentPane().add(btnPasswordEye);
 		
 		btnPasswordEye.addActionListener(new ActionListener() {
+			
+			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (flag) txtPass.setEchoChar((char) 0);
-				else txtPass.setEchoChar('*');
+				
+				if (flag) 
+				{
+					txtPass.setEchoChar((char) 0);
+					btnPasswordEye.setIcon(iconA);
+				}
+				else 
+				{	
+					txtPass.setEchoChar('*');
+					btnPasswordEye.setIcon(new ImageIcon(iconA.getImage().getScaledInstance(2, 1, Image.SCALE_SMOOTH)));
+				}
 				flag = !flag;
 			}
 		});
