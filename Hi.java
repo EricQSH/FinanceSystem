@@ -69,6 +69,7 @@ public class Hi {
 		
 		txtUser = new JTextField();
 		txtUser.setBounds(171, 77, 139, 21);
+		txtUser.setText("111111"); //Ä¬ÈÏÕËºÅ
 		frame.getContentPane().add(txtUser);
 		txtUser.setColumns(10);
 		
@@ -81,6 +82,7 @@ public class Hi {
 		txtPass.setColumns(10);
 		txtPass.setBounds(171, 122, 139, 21);
 		txtPass.setEchoChar('*');
+		txtPass.setText("r00t_User"); //Ä¬ÈÏÃÜÂë
 		frame.getContentPane().add(txtPass);
 		
 		JButton btnLogin = new JButton("Log in");
@@ -88,7 +90,7 @@ public class Hi {
 		btnLogin.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) {
-				//Â»Ã±ÃˆÂ¡Ã•Ã‹ÂºÃ…Ã“Ã«ÃƒÃœÃ‚Ã«
+				//»ñÈ¡ÕËºÅÓëÃÜÂë
 				DBConnect dbconn = new DBConnect();
 				Connection conn = (Connection) dbconn.conn;
 				try 
@@ -108,6 +110,7 @@ public class Hi {
 							Transfer transfer=new Transfer(conn, userno);
 							transfer.frame.setVisible(true);
 							frame.setVisible(false);
+							break;
 						}
 						else //System.out.print("Add a \"Wrong Password!\" dialog!\n");
 						{
