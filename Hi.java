@@ -18,13 +18,18 @@ import java.sql.Statement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 
 public class Hi {
 
 	JFrame frame;
 	private JTextField txtUser;
 	private JPasswordField txtPass;
-
+	boolean flag = true;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -69,7 +74,7 @@ public class Hi {
 		
 		txtUser = new JTextField();
 		txtUser.setBounds(171, 77, 139, 21);
-		txtUser.setText("111111"); //√Ñ¬¨√à√è√ï√ã¬∫√Ö
+		txtUser.setText("111111"); //ƒ¨»œ’À∫≈
 		frame.getContentPane().add(txtUser);
 		txtUser.setColumns(10);
 		
@@ -82,7 +87,7 @@ public class Hi {
 		txtPass.setColumns(10);
 		txtPass.setBounds(171, 122, 139, 21);
 		txtPass.setEchoChar('*');
-		txtPass.setText("r00t_User"); //√Ñ¬¨√à√è√É√ú√Ç√´
+		txtPass.setText("r00t_User"); //ƒ¨»œ√‹¬Î
 		frame.getContentPane().add(txtPass);
 		
 		JButton btnLogin = new JButton("Log in");
@@ -90,7 +95,7 @@ public class Hi {
 		btnLogin.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) {
-				//¬ª√±√à¬°√ï√ã¬∫√Ö√ì√´√É√ú√Ç√´
+				//ªÒ»°’À∫≈”Î√‹¬Î
 				DBConnect dbconn = new DBConnect();
 				Connection conn = (Connection) dbconn.conn;
 				try 
@@ -145,5 +150,18 @@ public class Hi {
 		btnExit.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		btnExit.setBounds(243, 183, 93, 23);
 		frame.getContentPane().add(btnExit);
+		
+		JButton btnPasswordEye = new JButton("");
+		btnPasswordEye.setIcon(new ImageIcon("/Users/apple/Documents/workspace/FinanceSystemSim_v1.0/src/45eccc1b72788a4ef9dc30eb96a6c64e.png"));
+		btnPasswordEye.setBounds(315, 85, 129, 86);
+		frame.getContentPane().add(btnPasswordEye);
+		
+		btnPasswordEye.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (flag) txtPass.setEchoChar((char) 0);
+				else txtPass.setEchoChar('*');
+				flag = !flag;
+			}
+		});
 	}
 }
