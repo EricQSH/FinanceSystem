@@ -48,8 +48,8 @@ public class Voucher {
 	/**
 	 * Create the application.
 	 */
-	public Voucher(Connection conn, int UserNo) {
-		initialize(conn, UserNo);
+	public Voucher(final DBConnect dbconn, int UserNo) {
+		initialize(dbconn, UserNo);
 	}
 	public Voucher() {
 		initialize(null, -1);
@@ -58,7 +58,7 @@ public class Voucher {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(Connection conn, int UserNo) {
+	private void initialize(final DBConnect dbconn, int UserNo) {
 		// 加个判断 是否登陆 是否连接数据库
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1000, 510);

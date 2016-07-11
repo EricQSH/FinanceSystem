@@ -7,15 +7,15 @@ public class DBConnect
 	public DBConnect()
 	{
 		// TODO Auto-generated method stub   
-//		String driver = "com.mysql.jdbc.Driver";// 驱动程序名        
-//	    String url = "jdbc:mysql://127.0.0.1:3307/test";// URL指向要访问的数据库名scutcs                 
-//		String user = "root";// MySQL配置时的用户名     
-//		String password = "T28Z6b";// MySQL配置时的密码   
-		//在线数据库
 		String driver = "com.mysql.jdbc.Driver";// 驱动程序名        
-	    String url = "jdbc:mysql://bodong31.mysql.rds.aliyuncs.com/accountingdb";// URL指向要访问的数据库名accountingdb                 
-		String user = "qsh31";// MySQL配置时的用户名     
-		String password = "228zhenNB";// MySQL配置时的密码           
+	    String url = "jdbc:mysql://127.0.0.1:3307/test";// URL指向要访问的数据库名scutcs                 
+		String user = "root";// MySQL配置时的用户名     
+		String password = "T28Z6b";// MySQL配置时的密码   
+		//在线数据库
+//		String driver = "com.mysql.jdbc.Driver";// 驱动程序名        
+//	    String url = "jdbc:mysql://bodong31.mysql.rds.aliyuncs.com/accountingdb";// URL指向要访问的数据库名accountingdb                 
+//		String user = "qsh31";// MySQL配置时的用户名     
+//		String password = "228zhenNB";// MySQL配置时的密码           
 		try 
 	    {             // 加载驱动程序            
 	    	Class.forName(driver);
@@ -78,6 +78,7 @@ public class DBConnect
 	}
 	protected void finalize() throws SQLException
 	{
+		System.out.print("Database disconnect succeess!");
 		this.conn.close();
 	}
 

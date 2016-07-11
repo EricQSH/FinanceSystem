@@ -28,7 +28,7 @@ public class Hi {
 	JFrame frame;
 	private JTextField txtUser;
 	private JPasswordField txtPass;
-	boolean flag = true;   //record the user want to set the password visible or not
+	boolean pwd_visible = true; //record the user want to set the password visible or not
 	
 	/**
 	 * Launch the application.
@@ -112,7 +112,7 @@ public class Hi {
 						if (txtUser.getText().equals(userno+"") && password.equals(txtPass.getText()))
 						{
 							//System.out.print("Add a \"Login Success!\" dialog!\n");
-							Transfer transfer=new Transfer(conn, userno);
+							Transfer transfer=new Transfer(dbconn, userno);
 							transfer.frame.setVisible(true);
 							frame.setVisible(false);
 							break;
@@ -164,7 +164,7 @@ public class Hi {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				if (flag) 
+				if (pwd_visible) 
 				{
 					txtPass.setEchoChar((char) 0);
 					btnPasswordEye.setIcon(iconA);
@@ -174,7 +174,7 @@ public class Hi {
 					txtPass.setEchoChar('*');
 					btnPasswordEye.setIcon(new ImageIcon(iconA.getImage().getScaledInstance(2, 1, Image.SCALE_SMOOTH)));
 				}
-				flag = !flag;
+				pwd_visible = !pwd_visible;
 			}
 		});
 	}

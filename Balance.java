@@ -18,6 +18,8 @@ import javax.swing.JLabel;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
@@ -27,6 +29,7 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -60,17 +63,17 @@ public class Balance {
 	/**
 	 * Create the application.
 	 */
-	public Balance(Connection conn, int UserNo) {
-		initialize(conn, UserNo);
+	public Balance(final DBConnect dbconn, int UserNo){
+		initialize(dbconn, UserNo);
 	}
-	public Balance() {
+	public Balance(){
 		initialize(null, -1);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(final Connection conn, final int UserNo) {
+	private void initialize(final DBConnect dbconn, final int UserNo){
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 482);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,43 +84,62 @@ public class Balance {
 		frame.getContentPane().add(scrollPane);
 		 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-			},
-			new String[] {
-				"Account", "Debit", "Credit", "Balance"
-			}
-		) {
+		DefaultTableModel model = new DefaultTableModel(null, new String[] {"Account", "Debit", "Credit", "Balance"})
+		{
 			Class[] columnTypes = new Class[] {
 				String.class, Double.class, Double.class, Double.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
-		});
+		};
+//		table.setModel(new DefaultTableModel(
+//			new Object[][] {
+//				{null, null, null, null},
+//				{null, null, null, null},
+//				{null, null, null, null},
+//				{null, null, null, null},
+//				{null, null, null, null},
+//				{null, null, null, null},
+//				{null, null, null, null},
+//				{null, null, null, null},
+//				{null, null, null, null},
+//				{null, null, null, null},
+//				{null, null, null, null},
+//				{null, null, null, null},
+//				{null, null, null, null},
+//				{null, null, null, null},
+//				{null, null, null, null},
+//				{null, null, null, null},
+//				{null, null, null, null},
+//				
+//			},
+//			new String[] {
+//				"Account", "Debit", "Credit", "Balance"
+//			}
+//		)); 
+		table.setModel(model);
+		
 		scrollPane.setViewportView(table);
+		
+		try 
+		{	
+			ResultSet rs = dbconn.Query(dbconn.conn, "Balance");
+			while(rs.next())
+			{
+				String account = rs.getString(1);
+				double balance = rs.getDouble(2);
+				//if (balance>0) 
+				model.addRow(new String[]{account, balance + ""});
+			}
+			rs.close();
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		lblBalance = new JLabel("Balance");
 		lblBalance.setFont(new Font("Times New Roman", Font.PLAIN, 18));

@@ -49,8 +49,8 @@ public class Account {
 	/**
 	 * Create the application.
 	 */
-	public Account(Connection conn, int UserNo) {
-		initialize(conn, UserNo);
+	public Account(final DBConnect dbconn, int UserNo) {
+		initialize(dbconn, UserNo);
 	}
 	public Account() {
 		initialize(null, -1);
@@ -59,7 +59,7 @@ public class Account {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(final Connection conn, final int UserNo) {
+	private void initialize(final DBConnect dbconn, final int UserNo) {
 		// 加个判断 是否登陆 是否连接数据库
 		frame = new JFrame();
 		frame.setBounds(100, 100, 500, 430);
@@ -151,7 +151,7 @@ public class Account {
 		JButton btnAcctVou = new JButton("Account Voucher");
 		btnAcctVou.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AcctVoucher acctVoucher=new AcctVoucher(conn, UserNo);
+				AcctVoucher acctVoucher=new AcctVoucher(dbconn, UserNo);
 				acctVoucher.frame.setVisible(true);
 				frame.setVisible(false);
 			}
@@ -162,7 +162,7 @@ public class Account {
 		JButton btnOriginalVou = new JButton("Original Voucher");
 		btnOriginalVou.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Voucher voucher=new Voucher(conn, UserNo);
+				Voucher voucher=new Voucher(dbconn, UserNo);
 				voucher.frame.setVisible(true);
 				frame.setVisible(false);
 			}
