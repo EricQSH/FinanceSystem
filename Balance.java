@@ -84,10 +84,10 @@ public class Balance {
 		frame.getContentPane().add(scrollPane);
 		 
 		table = new JTable();
-		DefaultTableModel model = new DefaultTableModel(null, new String[] {"Account", "Debit", "Credit", "Balance"})
+		DefaultTableModel model = new DefaultTableModel(null, new String[] {"Account", "Debit", "Credit"})
 		{
 			Class[] columnTypes = new Class[] {
-				String.class, Double.class, Double.class, Double.class
+				String.class, String.class, String.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
