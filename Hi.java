@@ -28,7 +28,7 @@ public class Hi {
 	JFrame frame;
 	private JTextField txtUser;
 	private JPasswordField txtPass;
-	boolean flag = true;
+	boolean flag = true;   //record the user want to set the password visible or not
 	
 	/**
 	 * Launch the application.
@@ -74,7 +74,7 @@ public class Hi {
 		
 		txtUser = new JTextField();
 		txtUser.setBounds(171, 77, 139, 21);
-		txtUser.setText("111111"); //ƒ¨»œ’À∫≈
+		txtUser.setText("111111"); //default acct
 		frame.getContentPane().add(txtUser);
 		txtUser.setColumns(10);
 		
@@ -87,7 +87,7 @@ public class Hi {
 		txtPass.setColumns(10);
 		txtPass.setBounds(171, 122, 139, 21);
 		txtPass.setEchoChar('*');
-		txtPass.setText("r00t_User"); //ƒ¨»œ√‹¬Î
+		txtPass.setText("r00t_User"); //default pwd
 		frame.getContentPane().add(txtPass);
 		
 		JButton btnLogin = new JButton("Log in");
@@ -95,7 +95,7 @@ public class Hi {
 		btnLogin.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) {
-				//ªÒ»°’À∫≈”Î√‹¬Î
+				//get the acct and pwd from db
 				DBConnect dbconn = new DBConnect();
 				Connection conn = (Connection) dbconn.conn;
 				try 
