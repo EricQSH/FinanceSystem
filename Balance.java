@@ -129,8 +129,11 @@ public class Balance {
 			{
 				String account = rs.getString(1);
 				double balance = rs.getDouble(2);
-				//if (balance>0) 
-				model.addRow(new String[]{account, balance + ""});
+				String a[];
+				a = new String[]{"","",""};
+				if (balance>0) a = new String[]{account, Math.abs(balance) + "", ""};
+				if (balance<0) a = new String[]{account, "", Math.abs(balance) + ""};
+					model.addRow(a);
 			}
 			rs.close();
 		} 
