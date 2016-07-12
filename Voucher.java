@@ -17,6 +17,8 @@ import java.awt.event.ActionEvent;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.util.Vector;
 
 import javax.swing.JComboBox;
@@ -105,10 +107,10 @@ public class Voucher {
 			}
 		) 
 		*/
-		DefaultTableModel model_Order = new DefaultTableModel(null, new String[] {"No.", "OrderNo.", "ItemNo.", "SupplierNo.", "Types of Payment", "Quantity", "Price", "Amount", "OrderDate", "ReceiptDate", "Recorded"})
+		DefaultTableModel model_Order = new DefaultTableModel(null, new String[] {"OrderNo.", "ItemNo.", "SupplierNo.", "Types of Payment", "Quantity", "Price", "Amount", "ReceiptDate", "Recorded"})
 		{
 			Class[] columnTypes = new Class[] {
-				String.class, String.class, String.class, String.class, String.class, Integer.class, Float.class, Long.class, String.class, String.class, Boolean.class
+				String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, Boolean.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
@@ -132,17 +134,34 @@ public class Voucher {
 		try 
 		{	
 			//Perhaps need to connect to another database, use SQL
-			ResultSet rs = dbconn.Query(dbconn.conn, "test_client_order"); //using test data
+			ResultSet rs = dbconn.Query(dbconn.conn, "test_supplier_order"); //using test data
 			while(rs.next())
 			{
-//				String account = rs.getString(1);
-//				double balance = rs.getDouble(2);
-//				Vector a =  new Vector();//Use Class Vector to contain information
-//				a.add("");
-//				a.add(1);
-//				//if (balance>0) a = new String[]{account, Math.abs(balance) + "", ""};
-//				//if (balance<0) a = new String[]{account, "", Math.abs(balance) + ""};
-//				model_Order.addRow(a);
+				String osno = rs.getString(1);
+				String ino = rs.getString(2);
+				int quantity = rs.getInt(3);
+				Timestamp receiptdate = rs.getTimestamp(4);
+				int price = rs.getInt(5);
+				DecimalFormat decimalFormat=new DecimalFormat(".00");
+				String sprice = decimalFormat.format(price);
+				String sno = rs.getString(6);
+				int amount = price * quantity;
+				//DecimalFormat decimalFormat=new DecimalFormat(".00");
+				String samount = decimalFormat.format(amount);
+				String spayment = rs.getString(8);
+				Vector a =  new Vector();//Use Class Vector to contain information
+				a.add(osno);
+				a.add(ino);
+				a.add(sno);
+				a.add(spayment);
+				a.add(quantity);
+				a.add(sprice);
+				a.add(samount);
+				a.add(receiptdate);
+				a.add(true);
+				//if (balance>0) a = new String[]{account, Math.abs(balance) + "", ""};
+				//if (balance<0) a = new String[]{account, "", Math.abs(balance) + ""};
+				model_Order.addRow(a);
 			}
 			rs.close();
 		} 
@@ -184,10 +203,10 @@ public class Voucher {
 			}
 		) 
 		*/
-		DefaultTableModel model_Inventory = new DefaultTableModel(null, new String[] {"No.", "InventoryNo.", "Inventory Expense", "Date", "Recorded"})
+		DefaultTableModel model_Inventory = new DefaultTableModel(null, new String[] {"InventoryNo.", "Inventory Expense", "Date", "Recorded"})
 		{
 			Class[] columnTypes = new Class[] {
-				String.class, String.class, Float.class, String.class, Boolean.class
+				String.class, String.class, String.class, Boolean.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
@@ -206,17 +225,22 @@ public class Voucher {
 		try 
 		{	
 			//Perhaps need to connect to another database, use SQL
-			ResultSet rs = dbconn.Query(dbconn.conn, "test_client_order"); //using test data
+			ResultSet rs = dbconn.Query(dbconn.conn, "test_store_cost"); //using test data
 			while(rs.next())
 			{
-//				String account = rs.getString(1);
-//				double balance = rs.getDouble(2);
-//				Vector a =  new Vector();//Use Class Vector to contain information
-//				a.add("");
-//				a.add(1);
-//				//if (balance>0) a = new String[]{account, Math.abs(balance) + "", ""};
-//				//if (balance<0) a = new String[]{account, "", Math.abs(balance) + ""};
-//				model_Inventory.addRow(a);
+				String scno = rs.getString(1);
+				int cost = rs.getInt(2);
+				DecimalFormat decimalFormat=new DecimalFormat(".00");
+				String scost = decimalFormat.format(cost);
+				Date date = rs.getDate(3);
+				Vector a =  new Vector();//Use Class Vector to contain information
+				a.add(scno);
+				a.add(scost);
+				a.add(date);
+				a.add(true);
+				//if (balance>0) a = new String[]{account, Math.abs(balance) + "", ""};
+				//if (balance<0) a = new String[]{account, "", Math.abs(balance) + ""};
+				model_Inventory.addRow(a);
 			}
 			rs.close();
 		} 
@@ -259,10 +283,10 @@ public class Voucher {
 			}
 		)
 		*/
-		DefaultTableModel model_Trans = new DefaultTableModel(null, new String[] {"No.", "TransNo.", "Transportation Expense", "Date", "Recorded"})
+		DefaultTableModel model_Trans = new DefaultTableModel(null, new String[] {"TransNo.", "Transportation Expense", "Date", "Recorded"})
 		{
 			Class[] columnTypes = new Class[] {
-				String.class, String.class, Float.class, String.class, Boolean.class
+				String.class, String.class, String.class, Boolean.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
@@ -284,14 +308,19 @@ public class Voucher {
 			ResultSet rs = dbconn.Query(dbconn.conn, "test_trans_cost"); //using test data
 			while(rs.next())
 			{
-//				String account = rs.getString(1);
-//				double balance = rs.getDouble(2);
-//				Vector a =  new Vector();//Use Class Vector to contain information
-//				a.add("");
-//				a.add(1);
-//				//if (balance>0) a = new String[]{account, Math.abs(balance) + "", ""};
-//				//if (balance<0) a = new String[]{account, "", Math.abs(balance) + ""};
-//				model_Trans.addRow(a);
+				String tcno = rs.getString(1);
+				int cost = rs.getInt(2);
+				DecimalFormat decimalFormat=new DecimalFormat(".00");
+				String scost = decimalFormat.format(cost);
+				Date date = rs.getDate(3);
+				Vector a =  new Vector();//Use Class Vector to contain information
+				a.add(tcno);
+				a.add(scost);
+				a.add(date);
+				a.add(true);
+				//if (balance>0) a = new String[]{account, Math.abs(balance) + "", ""};
+				//if (balance<0) a = new String[]{account, "", Math.abs(balance) + ""};
+				model_Trans.addRow(a);
 			}
 			rs.close();
 		} 
@@ -334,10 +363,10 @@ public class Voucher {
 			}
 		)
 		*/ 
-		DefaultTableModel model_Deposit = new DefaultTableModel(null, new String[] {"No.", "DepositNo.", "CustomerNo.", "Amount", "Date", "Recorded"})
+		DefaultTableModel model_Deposit = new DefaultTableModel(null, new String[] {"DepositNo.", "CustomerNo.", "Amount", "Date", "Recorded"})
 		{
 			Class[] columnTypes = new Class[] {
-				String.class, String.class, String.class, String.class, Date.class, Boolean.class
+				String.class, String.class, String.class, String.class, Boolean.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
@@ -357,24 +386,28 @@ public class Voucher {
 		{	
 			//Perhaps need to connect to another database, use SQL
 			ResultSet rs = dbconn.Query(dbconn.conn, "test_deposit"); //using test data
-			int count = 0;
+			//int count = 0;
 			while(rs.next())
 			{
+				/*
 				count++;
 				String strcount = count + "";
 				while (strcount.length()<8)
 				{
 					strcount = "0" + strcount;
 				}
+				*/
 				String dpno = rs.getString(1);
 				String cno = rs.getString(2);
-				String amount = rs.getString(3);
+				Double amount = rs.getDouble(3);
+				DecimalFormat decimalFormat=new DecimalFormat(".00");
+				String samount = decimalFormat.format(amount);
 				Date date = rs.getDate(4);
 				Vector a =  new Vector();//Use Class Vector to contain information
-				a.add(strcount);
+				//a.add(strcount);
 				a.add(dpno);
 				a.add(cno);
-				a.add(amount);
+				a.add(samount);
 				a.add(date);
 				a.add(true);
 				//if (balance>0) a = new String[]{account, Math.abs(balance) + "", ""};
@@ -422,10 +455,10 @@ public class Voucher {
 			}
 		) 
 		*/
-		DefaultTableModel model_Sale = new DefaultTableModel(null, new String[] {"No.", "SaleNo.", "CustomerNo.", "Sales", "SaleDate", "Types of Payment", "ItemNo.", "Item Cost", "Quantity", "SupplierInventory", "Recorded"})
+		DefaultTableModel model_Sale = new DefaultTableModel(null, new String[] {"SaleNo.", "CustomerNo.", "Quantity", "Cost", "Sales", "SaleDate", "Types of Payment", "ItemNo.", "SupplierInventory", "Recorded"})
 		{
 			Class[] columnTypes = new Class[] {
-				String.class, String.class, String.class, Float.class, String.class, String.class, String.class, Float.class, Integer.class, Boolean.class, Boolean.class
+				String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, Boolean.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
@@ -450,14 +483,32 @@ public class Voucher {
 			ResultSet rs = dbconn.Query(dbconn.conn, "test_client_order"); //using test data
 			while(rs.next())
 			{
-//				String account = rs.getString(1);
-//				double balance = rs.getDouble(2);
-//				Vector a =  new Vector();//Use Class Vector to contain information
-//				a.add("");
-//				a.add(1);
-//				//if (balance>0) a = new String[]{account, Math.abs(balance) + "", ""};
-//				//if (balance<0) a = new String[]{account, "", Math.abs(balance) + ""};
-//				model_Sale.addRow(a);
+				String orno = rs.getString(1);
+				String cno = rs.getString(2);
+				String ino = rs.getString(3);
+				DecimalFormat decimalFormat=new DecimalFormat(".00");
+				int quantity = rs.getInt(4);
+				int price = rs.getInt(5);
+				String samount = decimalFormat.format(quantity*price);
+				Date date = rs.getDate(6);
+				int cost = rs.getInt(8);
+				String scost = decimalFormat.format(quantity*cost);
+				String payment = rs.getString(11);
+				int si = rs.getInt(12);
+				Vector a =  new Vector();//Use Class Vector to contain information
+				a.add(orno);
+				a.add(cno);
+				a.add(quantity);
+				a.add(scost);
+				a.add(samount);
+				a.add(date);
+				a.add(payment);
+				a.add(ino);
+				a.add(si);
+				a.add(true);
+				//if (balance>0) a = new String[]{account, Math.abs(balance) + "", ""};
+				//if (balance<0) a = new String[]{account, "", Math.abs(balance) + ""};
+				model_Sale.addRow(a);
 			}
 			rs.close();
 		} 
