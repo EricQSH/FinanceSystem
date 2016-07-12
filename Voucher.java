@@ -67,12 +67,13 @@ public class Voucher {
 	private void initialize(final DBConnect dbconn, final int UserNo) {
 		//Check if dbconn is null and UserNo is -1; if so, not connect to the database or not login yet
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1000, 510);
+		frame.setLocation(10,100);
+		frame.setBounds(100, 100, 1000, 465);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JTabbedPane Voucher = new JTabbedPane(JTabbedPane.TOP);
-		Voucher.setBounds(10, 71, 964, 339);
+		Voucher.setBounds(10, 71, 964, 310);
 		frame.getContentPane().add(Voucher);
 		
 		JScrollPane scrollOrder = new JScrollPane();
@@ -530,18 +531,18 @@ public class Voucher {
 				System.exit(0);
 			}
 		});
-		btnExit.setBounds(823, 428, 93, 23);
+		btnExit.setBounds(823, 393, 93, 23);
 		frame.getContentPane().add(btnExit);
 		
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Account account=new Account(dbconn, UserNo);
-				account.frame.setVisible(true);
+				//Account account=new Account(dbconn, UserNo);
+				//account.frame.setVisible(true);
 				frame.setVisible(false);
 			}
 		});
-		btnBack.setBounds(702, 428, 93, 23);
+		btnBack.setBounds(702, 393, 93, 23);
 		frame.getContentPane().add(btnBack);
 		
 		JComboBox comboBox = new JComboBox();
