@@ -74,6 +74,7 @@ public class Balance {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize(final DBConnect dbconn, final int UserNo){
+		//Check if dbconn is null and UserNo is -1; if so, not connect to the database or not login yet
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 482);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -121,7 +122,7 @@ public class Balance {
 		table.setModel(model);
 		
 		scrollPane.setViewportView(table);
-		
+		//Get all information from Table Balance
 		try 
 		{	
 			ResultSet rs = dbconn.Query(dbconn.conn, "Balance");
@@ -133,7 +134,7 @@ public class Balance {
 				a = new String[]{"","",""};
 				if (balance>0) a = new String[]{account, Math.abs(balance) + "", ""};
 				if (balance<0) a = new String[]{account, "", Math.abs(balance) + ""};
-					model.addRow(a);
+				model.addRow(a);
 			}
 			rs.close();
 		} 
@@ -160,7 +161,7 @@ public class Balance {
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Transfer transfer=new Transfer();
+				Transfer transfer=new Transfer(dbconn, UserNo);
 				transfer.frame.setVisible(true);
 				frame.setVisible(false);
 			}

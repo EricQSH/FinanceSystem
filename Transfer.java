@@ -45,7 +45,7 @@ public class Transfer {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize(final DBConnect dbconn, final int UserNo) {
-		// 加个判断 是否登陆 是否连接数据库
+		//Check if dbconn is null and UserNo is -1; if so, not connect to the database or not login yet
 		frame = new JFrame();
 		frame.setBounds(100, 100, 436, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

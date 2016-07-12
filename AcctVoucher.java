@@ -49,8 +49,8 @@ public class AcctVoucher {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(final DBConnect dbconn, int UserNo) {
-		// 加个判断 是否登陆 是否连接数据库
+	private void initialize(final DBConnect dbconn, final int UserNo) {
+		//Check if dbconn is null and UserNo is -1; if so, not connect to the database or not login yet
 		frame = new JFrame();
 		frame.setBounds(100, 100, 1200, 450);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -113,7 +113,7 @@ public class AcctVoucher {
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Account account=new Account();
+				Account account=new Account(dbconn, UserNo);
 				account.frame.setVisible(true);
 				frame.setVisible(false);
 			}
