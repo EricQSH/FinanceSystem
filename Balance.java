@@ -36,6 +36,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 
 import com.mysql.jdbc.Connection;
+
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -136,11 +137,11 @@ public class Balance {
 				String account = rs.getString(1);
 				double balance = rs.getDouble(2);
 				
-				if(account.contains("搴撳瓨")) sumofInventory+=Math.abs(balance);
-				if(account.contains("浠撳偍璐圭敤")) sumofExpense+=Math.abs(balance);
-				if(account.contains("杩愯緭璐圭敤")) sumofExpense+=Math.abs(balance);
-				if(account.contains("钀ヤ笟鎴愭湰")) sumofExpense+=Math.abs(balance);
-				if(account.contains("钀ヤ笟鏀跺叆")) sumofSales+=Math.abs(balance);
+				if(account.contains("库存")) sumofInventory+=Math.abs(balance);
+				if(account.contains("仓储费用")) sumofExpense+=Math.abs(balance);
+				if(account.contains("运输费用")) sumofExpense+=Math.abs(balance);
+				if(account.contains("营业成本")) sumofExpense+=Math.abs(balance);
+				if(account.contains("营业收入")) sumofSales+=Math.abs(balance);
 				
 				String a[];
 				a = new String[]{"","",""};
@@ -192,10 +193,12 @@ public class Balance {
 		frame.getContentPane().add(btnExit);
 		
 		textSum = new JTextField();
+		textSum.setEditable(false);
 		textSum.setBounds(238, 335, 119, 21);
 		frame.getContentPane().add(textSum);
-		textSum.setColumns(10);
+		textSum.setColumns(1);
 		
+		/*
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"EBIT","Sales", "Expense", "Inventory"}));
 		comboBox.setBounds(66, 335, 93, 21);
@@ -209,6 +212,29 @@ public class Balance {
 					case "Sales": textSum.setText(sumofSales+""); break;
 					case "Expense": textSum.setText(sumofExpense+""); break;
 					case "Inventory": textSum.setText(sumofInventory+""); break;
+					default: textSum.setText("Error");
+				}
+				
+			}
+		});
+		*/
+		
+		final JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"EBIT","Sales", "Expense", "Inventory"}));
+		comboBox.setBounds(66, 335, 93, 21);
+		frame.getContentPane().add(comboBox);
+		
+		comboBox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {	
+				String cur = (String)comboBox.getSelectedItem();
+				switch(cur.charAt(1))
+				{
+					case 'B': textSum.setText((sumofSales-sumofExpense)+""); break;
+					case 'a': textSum.setText(sumofSales+""); break;
+					case 'x': textSum.setText(sumofExpense+""); break;
+					case 'n': textSum.setText(sumofInventory+""); break;
 					default: textSum.setText("Error");
 				}
 				
