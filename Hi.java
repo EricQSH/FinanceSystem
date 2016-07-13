@@ -156,7 +156,7 @@ public class Hi {
 		//icon = new ImageIcon("./src/45eccc1b72788a4ef9dc30eb96a6c64e.png");
 		final ImageIcon iconA = new ImageIcon(new ImageIcon("./src/45eccc1b72788a4ef9dc30eb96a6c64e.png").getImage().getScaledInstance(50, 45, Image.SCALE_SMOOTH));
 		btnPasswordEye.setIcon(new ImageIcon(iconA.getImage().getScaledInstance(2, 1, Image.SCALE_SMOOTH)));
-		btnPasswordEye.setBounds(311, 122, 33, 29);
+		btnPasswordEye.setBounds(311, 122, 34, 21);
 		frame.getContentPane().add(btnPasswordEye);
 		
 		btnPasswordEye.addActionListener(new ActionListener() {
