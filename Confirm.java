@@ -1,21 +1,16 @@
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-
-import java.awt.Font;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JLabel;
+import java.awt.Font;
 import javax.swing.JButton;
-
-import com.mysql.jdbc.Connection;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class AcctVoucher {
+public class Confirm {
 
 	JFrame frame;
 	private JTable table;
@@ -27,7 +22,7 @@ public class AcctVoucher {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AcctVoucher window = new AcctVoucher();
+					Confirm window = new Confirm();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,96 +34,72 @@ public class AcctVoucher {
 	/**
 	 * Create the application.
 	 */
-	public AcctVoucher(final DBConnect dbconn, int UserNo) {
-		initialize(dbconn, UserNo);
-	}
-	public AcctVoucher() {
-		initialize(null, -1);
+	public Confirm() {
+		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(final DBConnect dbconn, final int UserNo) {
-		//Check if dbconn is null and UserNo is -1; if so, not connect to the database or not login yet
+	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1200, 450);
+		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblAcctVou = new JLabel("Accounting Voucher");
-		lblAcctVou.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		lblAcctVou.setBounds(514, 10, 196, 22);
-		frame.getContentPane().add(lblAcctVou);
-		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 60, 1164, 285);
+		scrollPane.setBounds(25, 47, 375, 150);
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null, null, null, null, null, null},
-				{"", null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null, null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
 			},
 			new String[] {
-				"Accounting VoucherNo.", "Account", "Amount", "D/C", "Date", "Description", "VoucherNo.", "SupplierNo.", "CustomerNo.", "ItemNo.", "Accountant"
+				"OrderNo.", "State"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
-				String.class, String.class, Float.class, Integer.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class
+				String.class, String.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
-			boolean[] columnEditables = new boolean[] {
-				false, false, false, false, false, false, false, false, false, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
+		});
+		scrollPane.setViewportView(table);
+		
+		JLabel lblPaymentConfirmation = new JLabel("Payment Confirmation");
+		lblPaymentConfirmation.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		lblPaymentConfirmation.setBounds(138, 17, 171, 15);
+		frame.getContentPane().add(lblPaymentConfirmation);
+		
+		JButton btnConfirm = new JButton("Confirm");
+		btnConfirm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//ChenHC Zui hao la
 			}
 		});
-		table.getColumnModel().getColumn(0).setPreferredWidth(180);
-		table.getColumnModel().getColumn(3).setPreferredWidth(50);
-		scrollPane.setViewportView(table);
+		btnConfirm.setBounds(158, 216, 93, 23);
+		frame.getContentPane().add(btnConfirm);
 		
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Account account=new Account(dbconn, UserNo);
-				account.frame.setVisible(true);
+			public void actionPerformed(ActionEvent arg0) {
+				Transfer transfer = new Transfer();
 				frame.setVisible(false);
+				transfer.frame.setVisible(true);
 			}
 		});
-		btnBack.setBounds(917, 367, 93, 23);
+		btnBack.setBounds(307, 216, 93, 23);
 		frame.getContentPane().add(btnBack);
-		
-		JButton btnExit = new JButton("Exit");
-		btnExit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frame.setVisible(false);
-				System.exit(0);
-			}
-		});
-		btnExit.setBounds(1048, 367, 93, 23);
-		frame.getContentPane().add(btnExit);
 	}
 }
