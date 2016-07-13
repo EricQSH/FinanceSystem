@@ -5,10 +5,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.Vector;
 
 public class Confirm {
 
@@ -34,14 +42,17 @@ public class Confirm {
 	/**
 	 * Create the application.
 	 */
+	public Confirm(final DBConnect dbconn, int UserNo) {
+		initialize(dbconn, UserNo);
+	}
 	public Confirm() {
-		initialize();
+		initialize(null, -1);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(final DBConnect dbconn, final int UserNo) {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,6 +63,7 @@ public class Confirm {
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
+		/*
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null},
@@ -68,13 +80,17 @@ public class Confirm {
 				"OrderNo.", "State"
 			}
 		) {
+		*/
+		final DefaultTableModel model = new DefaultTableModel(null, new String[] {"OrderNo.", "State"})
+		{
 			Class[] columnTypes = new Class[] {
 				String.class, String.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
-		});
+		};
+		table.setModel(model);
 		scrollPane.setViewportView(table);
 		
 		JLabel lblPaymentConfirmation = new JLabel("Payment Confirmation");
@@ -82,10 +98,38 @@ public class Confirm {
 		lblPaymentConfirmation.setBounds(138, 17, 171, 15);
 		frame.getContentPane().add(lblPaymentConfirmation);
 		
+		//Get all information from Table ???
+		try 
+		{	
+			//Perhaps need to connect to another database, use SQL
+			ResultSet rs = dbconn.Query(dbconn.conn, "test_check_payment"); //using test data
+			while(rs.next())
+			{
+				String orno = rs.getString(1);
+				String state = rs.getString(2);
+				Vector a =  new Vector();//Use Class Vector to contain information
+				a.add(orno);
+				a.add(state);
+				//if (balance>0) a = new String[]{account, Math.abs(balance) + "", ""};
+				//if (balance<0) a = new String[]{account, "", Math.abs(balance) + ""};
+				if (state.equals("Î´¸¶¿î")) model.addRow(a);
+			}
+			rs.close();
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		JButton btnConfirm = new JButton("Confirm");
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//ChenHC Zui hao la
+				int row = table.getSelectedColumn();
+				String orNo = (String) table.getValueAt(row, 0);
+				String sql = "UPDATE test_check_payment SET state=\"Î´·¢»õ\" WHERE orno=" + orNo;
+				dbconn.Update(dbconn.conn, sql);
+				model.removeRow(row);
 			}
 		});
 		btnConfirm.setBounds(158, 216, 93, 23);
@@ -94,7 +138,7 @@ public class Confirm {
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Transfer transfer = new Transfer();
+				Transfer transfer = new Transfer(dbconn, UserNo);
 				frame.setVisible(false);
 				transfer.frame.setVisible(true);
 			}

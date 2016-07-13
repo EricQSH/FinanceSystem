@@ -7,7 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+
 import java.awt.Image;
+
 import com.mysql.jdbc.Connection;
 
 import java.beans.PropertyChangeListener;
@@ -18,6 +20,7 @@ import java.sql.Statement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.AbstractAction;
@@ -133,7 +136,6 @@ public class Hi {
 					e.printStackTrace();
 				}
 				//else frame.setTitle(txtPass.getText());
-				
 			}
 		});
 		btnLogin.setBounds(113, 184, 93, 23);

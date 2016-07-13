@@ -60,7 +60,7 @@ public class Transfer {
 				frame.setVisible(false);
 			}
 		});
-		btnBalance.setBounds(66, 90, 100, 30);
+		btnBalance.setBounds(66, 100, 100, 30);
 		frame.getContentPane().add(btnBalance);
 		
 		JButton btnAccount = new JButton("Account");
@@ -68,13 +68,24 @@ public class Transfer {
 		btnAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Account account=new Account(dbconn, UserNo);
-				account.frame.setLocation(0, 0);
 				account.frame.setVisible(true);
 				frame.setVisible(false);
 			}
 		});
-		btnAccount.setBounds(242, 90, 100, 30);
+		btnAccount.setBounds(242, 100, 100, 30);
 		frame.getContentPane().add(btnAccount);
+		
+		JButton btnConfirm = new JButton("Confirm");
+		btnConfirm.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+		btnConfirm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Confirm confirm=new Confirm(dbconn, UserNo);
+				confirm.frame.setVisible(true);
+				frame.setVisible(false);
+			}
+		});
+		btnConfirm.setBounds(66, 140, 100, 30);
+		frame.getContentPane().add(btnConfirm);
 		
 		JButton btnExit = new JButton("Exit");
 		btnExit.addActionListener(new ActionListener() {
@@ -83,7 +94,7 @@ public class Transfer {
 				System.exit(0);
 			}
 		});
-		btnExit.setBounds(242, 216, 80, 23);
+		btnExit.setBounds(262, 200, 80, 23);
 		frame.getContentPane().add(btnExit);
 		
 		JLabel lblMenu = new JLabel("Menu");
@@ -99,19 +110,7 @@ public class Transfer {
 				frame.setVisible(false);
 			}
 		});
-		btnLogOut.setBounds(66, 216, 80, 23);
+		btnLogOut.setBounds(168, 200, 80, 23);
 		frame.getContentPane().add(btnLogOut);
-		
-		JButton btnConfirm = new JButton("Confirm");
-		btnConfirm.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Confirm confirm = new Confirm();
-				frame.setVisible(false);
-				confirm.frame.setVisible(true);
-			}
-		});
-		btnConfirm.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-		btnConfirm.setBounds(66, 140, 100, 30);
-		frame.getContentPane().add(btnConfirm);
 	}
 }

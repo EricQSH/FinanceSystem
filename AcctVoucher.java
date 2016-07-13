@@ -14,6 +14,11 @@ import com.mysql.jdbc.Connection;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.Date;
+import java.util.Vector;
 
 public class AcctVoucher {
 
@@ -66,6 +71,7 @@ public class AcctVoucher {
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
+		/*
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null, null, null, null, null, null, null},
@@ -93,8 +99,11 @@ public class AcctVoucher {
 				"Accounting VoucherNo.", "Account", "Amount", "D/C", "Date", "Description", "VoucherNo.", "SupplierNo.", "CustomerNo.", "ItemNo.", "Accountant"
 			}
 		) {
+		*/
+		DefaultTableModel model = new DefaultTableModel(null, new String[] {	"Account-VoucherNo.", "Account", "Amount", "D/C", "Date", "Description", "VoucherNo.", "SupplierNo.", "CustomerNo.", "ItemNo.", "Accountant"})
+		{
 			Class[] columnTypes = new Class[] {
-				String.class, String.class, Float.class, Integer.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class
+				String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class, String.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
@@ -105,10 +114,60 @@ public class AcctVoucher {
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
-		});
-		table.getColumnModel().getColumn(0).setPreferredWidth(180);
+		};
+		table.setModel(model);
+		table.getColumnModel().getColumn(0).setPreferredWidth(100);
+		//table.getColumnModel().getColumn(1).setPreferredWidth(120);
 		table.getColumnModel().getColumn(3).setPreferredWidth(50);
+		//table.getColumnModel().getColumn(5).setPreferredWidth(150);
+		//table.getColumnModel().getColumn(6).setPreferredWidth(45);
+		//table.getColumnModel().getColumn(7).setPreferredWidth(50);
+		//table.getColumnModel().getColumn(8).setPreferredWidth(45);
+		//table.getColumnModel().getColumn(9).setPreferredWidth(45);
 		scrollPane.setViewportView(table);
+		
+		try 
+		{	
+			ResultSet rs = dbconn.Query(dbconn.conn, "acctvoucher");
+			while(rs.next())
+			{
+				String voucherno = rs.getString(1);
+				String account = rs.getString(2);
+				String supplierno =  rs.getString(3);
+				String customerno =  rs.getString(4);
+				String productno =  rs.getString(5);
+				DecimalFormat decimalFormat=new DecimalFormat(".00");
+				double amount =  rs.getDouble(6);
+				String samount = decimalFormat.format(amount);
+				String dc = (rs.getInt(7)==0)?"Debit":"Credit";
+				String description =  rs.getString(8);
+				Date date =  rs.getDate(9);
+				String source =  rs.getString(10);
+				String userNo =  rs.getString(11);
+				//if (!dc.equals("Debit")) account = "      " + account;
+				
+				Vector a =  new Vector();//Use Class Vector to contain information
+				a.add(voucherno);
+				a.add(account);
+				a.add(samount);
+				a.add(dc);
+				a.add(date);
+				a.add(description);
+				a.add(source);
+				a.add(supplierno);
+				a.add(customerno);
+				a.add(productno);
+				a.add(userNo);
+				//"select account.voucherNo, account.account, voucher.supplierNo, voucher.customerNo, voucher.productNo, account.amount, account.debitCredit, voucher.description, account.date, voucher.source, voucher.userNo from account join voucher on account.voucherNo=voucher.voucherNo;"
+				model.addRow(a);
+			}
+			rs.close();
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
