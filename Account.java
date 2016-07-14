@@ -286,12 +286,17 @@ public class Account {
 						sumc += dc==0?0:amount;
 						sumd += dc==0?amount:0;
 						String description = (String) table.getValueAt(i, 6);
-						Date date = (Date) table.getValueAt(i, 7);
+						Date utilDate = (Date)table.getValueAt(i, 7);
+						java.sql.Date date = new java.sql.Date(utilDate.getTime());
 						String source = (String) table.getValueAt(i, 8);			
 						
+						String sql_account = "INSERT INTO account values(\""+voucherno+"\",\""+account+"\",\""+amount+"\","+dc+",\""+date+"\")";
+						String sql_voucher = "INSERT INTO voucher values(\""+voucherno+"\",\""+supplierno+"\",\""+customerno+"\",\""+productno +"\",\""+description+"\",\""+date+"\",\""+source+"\",\""+UserNo+"\")";
+						dbconn.Update(dbconn.conn, sql_account);
 						System.out.print("INSERT INTO account values("+voucherno+","+account+","+amount+","+dc+","+date+");" + "\n");
 						if (sumd - sumc==0) 
 						{
+							dbconn.Update(dbconn.conn, sql_voucher);
 							System.out.print("INSERT INTO voucher values("+voucherno+","+supplierno+","+customerno+","+productno +","+description+","+date+","+source+","+UserNo+");" + "\n");
 							sumd = sumc = 0;
 						}
