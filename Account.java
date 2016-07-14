@@ -215,7 +215,8 @@ public class Account {
 					i++;
 				} while ((i<=rowcount)&&(!voucherNo.equals("")));
 				if (sumd - sumc!=0) 
-					System.out.print("Fuck U!");//FUUUUUUUUUUUUUUUUUUUUUCK UUUUUUUUU NOT BALANCE!
+				JOptionPane.showMessageDialog(null, "Unbalanced amount!","", JOptionPane.ERROR_MESSAGE);
+ -					//System.out.print("Fuck U!");//FUUUUUUUUUUUUUUUUUUUUUCK UUUUUUUUU NOT BALANCE!
 				else
 				{
 				
@@ -328,7 +329,8 @@ public class Account {
 						}
 						i++;
 					} while ((i<=rowcount)&&(!voucherNo.equals("")));
-					System.out.print("Fuck U MOTHERFXCKER!");//FUUUUUUUUUUUUUUUUUUUUUCK UUUUUUUUU RECORD SUCCESS!
+					JOptionPane.showMessageDialog(null, "Record successfully!","", JOptionPane.INFORMATION_MESSAGE);
+ -					//System.out.print("Fuck U MOTHERFXCKER!");//FUUUUUUUUUUUUUUUUUUUUUCK UUUUUUUUU RECORD SUCCESS!
 					//drawNewTable();
 					
 					table.setModel(new DefaultTableModel(
