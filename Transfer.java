@@ -68,6 +68,7 @@ public class Transfer {
 		btnAccount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Account account=new Account(dbconn, UserNo);
+				account.frame.setLocation(0,0);
 				account.frame.setVisible(true);
 				frame.setVisible(false);
 			}
