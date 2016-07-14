@@ -215,8 +215,7 @@ public class Account {
 					i++;
 				} while ((i<=rowcount)&&(!voucherNo.equals("")));
 				if (sumd - sumc!=0) 
-					JOptionPane.showMessageDialog(null, "Unbalanced amount!","", JOptionPane.ERROR_MESSAGE);
-					//System.out.print("Fuck U!");//FUUUUUUUUUUUUUUUUUUUUUCK UUUUUUUUU NOT BALANCE!
+					System.out.print("Fuck U!");//FUUUUUUUUUUUUUUUUUUUUUCK UUUUUUUUU NOT BALANCE!
 				else
 				{
 				
@@ -308,12 +307,17 @@ public class Account {
 //						
 //						System.out.println(date);
 //						String source = (String) table.getValueAt(i, 8);			
-						String sql_account = "INSERT INTO account values(\""+voucherno+"\",\""+account+"\",\""+amount+"\","+dc+",\""+date+"\")";
+						String sql_account = "INSERT INTO account values(\""+voucherno+"\",\""+account+"\",\""+amount+"\","+dc+",\""+date+"\",0)";
 						String sql_voucher = "INSERT INTO voucher values(\""+voucherno+"\",\""+supplierno+"\",\""+customerno+"\",\""+productno +"\",\""+description+"\",\""+date+"\",\""+source+"\",\""+UserNo+"\")";
 						
 						double signedamount = (dc==0)?amount:-amount;
 						String sql_balance = "INSERT INTO balance(account,balance) VALUES(\""+account+"\","+signedamount+") ON DUPLICATE KEY UPDATE balance=balance+"+signedamount;
-					    if(date.getTime()<=new Date().getTime()) dbconn.Update(dbconn.conn, sql_balance);
+						String sql_account_recorded="UPDATE account SET recorded=1 WHERE voucherNo=\""+voucherno+"\" and account=\""+account+"\"";
+					    if(date.getTime()<=new Date().getTime()) 
+					    {
+					    	dbconn.Update(dbconn.conn, sql_balance);
+					    	dbconn.Update(dbconn.conn, sql_account_recorded);
+					    }
 						dbconn.Update(dbconn.conn, sql_account);
 						System.out.print("INSERT INTO account values("+voucherno+","+account+","+amount+","+dc+","+date+");" + "\n");
 						if (sumd - sumc==0) 
@@ -324,8 +328,7 @@ public class Account {
 						}
 						i++;
 					} while ((i<=rowcount)&&(!voucherNo.equals("")));
-					JOptionPane.showMessageDialog(null, "Record successfully!","", JOptionPane.INFORMATION_MESSAGE);
-					//System.out.print("Fuck U MOTHERFXCKER!");//FUUUUUUUUUUUUUUUUUUUUUCK UUUUUUUUU RECORD SUCCESS!
+					System.out.print("Fuck U MOTHERFXCKER!");//FUUUUUUUUUUUUUUUUUUUUUCK UUUUUUUUU RECORD SUCCESS!
 					//drawNewTable();
 					
 					table.setModel(new DefaultTableModel(
