@@ -3,6 +3,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 //import java.sql.Date;
 import java.awt.Font;
 
@@ -123,20 +125,20 @@ public class Account {
         ////////////////////////////////////////////////
         
 
-        //修改表格的默认编辑器：
+        //淇敼琛ㄦ牸鐨勯粯璁ょ紪杈戝櫒锛�
         table.getColumnModel().getColumn(7).setCellEditor(new MyButtonEditor());
 
          
 
 //        /*
-//        这样后就能基本达到效果了。但是还要注意，对列2来说，还需要启用可编辑功能，才行，不然仍然触发不了事件的。
+//        杩欐牱鍚庡氨鑳藉熀鏈揪鍒版晥鏋滀簡銆備絾鏄繕瑕佹敞鎰忥紝瀵瑰垪2鏉ヨ锛岃繕闇�瑕佸惎鐢ㄥ彲缂栬緫鍔熻兘锛屾墠琛岋紝涓嶇劧浠嶇劧瑙﹀彂涓嶄簡浜嬩欢鐨勩��
 //
-//        代码片段：
+//        浠ｇ爜鐗囨锛�
 //        */
 //
 //        public boolean isCellEditable(int row, int column)  
 //        {  
-//            // 带有按钮列的功能这里必须要返回true不然按钮点击时不会触发编辑效果，也就不会触发事件。   
+//            // 甯︽湁鎸夐挳鍒楃殑鍔熻兘杩欓噷蹇呴』瑕佽繑鍥瀟rue涓嶇劧鎸夐挳鐐瑰嚮鏃朵笉浼氳Е鍙戠紪杈戞晥鏋滐紝涔熷氨涓嶄細瑙﹀彂浜嬩欢銆�   
 //            if (column == 2)  
 //            {  
 //                return true;  
@@ -215,7 +217,7 @@ public class Account {
 					i++;
 				} while ((i<=rowcount)&&(!voucherNo.equals("")));
 				if (sumd - sumc!=0) 
-					System.out.print("Fuck U!");//FUUUUUUUUUUUUUUUUUUUUUCK UUUUUUUUU NOT BALANCE!
+					JOptionPane.showMessageDialog(null, "Unbalanced amount!","", JOptionPane.ERROR_MESSAGE);
 				else
 				{
 				
@@ -323,7 +325,8 @@ public class Account {
 						}
 						i++;
 					} while ((i<=rowcount)&&(!voucherNo.equals("")));
-					System.out.print("Fuck U MOTHERFXCKER!");//FUUUUUUUUUUUUUUUUUUUUUCK UUUUUUUUU RECORD SUCCESS!
+					JOptionPane.showMessageDialog(null, "Record successfully!","", JOptionPane.INFORMATION_MESSAGE);
+					//System.out.print("Fuck U MOTHERFXCKER!");//FUUUUUUUUUUUUUUUUUUUUUCK UUUUUUUUU RECORD SUCCESS!
 					//drawNewTable();
 					
 					table.setModel(new DefaultTableModel(
@@ -470,17 +473,17 @@ public class Account {
       
         public MyButtonEditor()  
         {  
-            // DefautlCellEditor有此构造器，需要传入一个，但这个不会使用到，直接new一个即可。   
+            // DefautlCellEditor鏈夋鏋勯�犲櫒锛岄渶瑕佷紶鍏ヤ竴涓紝浣嗚繖涓笉浼氫娇鐢ㄥ埌锛岀洿鎺ew涓�涓嵆鍙��   
             super(new JTextField());  
       
-            // 设置点击几次激活编辑。   
+            // 璁剧疆鐐瑰嚮鍑犳婵�娲荤紪杈戙��   
             this.setClickCountToStart(1);  
       
             this.initButton();  
       
             this.initPanel();  
       
-            // 添加按钮。   
+            // 娣诲姞鎸夐挳銆�   
             this.panel.add(this.button);  
         }  
       
@@ -488,22 +491,22 @@ public class Account {
         {  
             this.button = new JButton();  
       
-            // 设置按钮的大小及位置。   
+            // 璁剧疆鎸夐挳鐨勫ぇ灏忓強浣嶇疆銆�   
             this.button.setBounds(0, 0, 50, 15);  
       
-            // 为按钮添加事件。这里只能添加ActionListner事件，Mouse事件无效。   
+            // 涓烘寜閽坊鍔犱簨浠躲�傝繖閲屽彧鑳芥坊鍔燗ctionListner浜嬩欢锛孧ouse浜嬩欢鏃犳晥銆�   
             this.button.addActionListener(new ActionListener()  
             {  
                 public void actionPerformed(ActionEvent e)  
                 {  
-                    // 触发取消编辑的事件，不会调用tableModel的setValue方法。   
+                    // 瑙﹀彂鍙栨秷缂栬緫鐨勪簨浠讹紝涓嶄細璋冪敤tableModel鐨剆etValue鏂规硶銆�   
                     MyButtonEditor.this.fireEditingCanceled();
                     int row = table.getSelectedRow();
                     int col = table.getSelectedColumn();
                     System.out.print("Performed Success! Col: " + col + " Row: " + row + "\n");
                     DateUI dateTable = new DateUI(table, row, col);
-                    // 这里可以做其它操作。   
-                    // 可以将table传入，通过getSelectedRow,getSelectColumn方法获取到当前选择的行和列及其它操作等。   
+                    // 杩欓噷鍙互鍋氬叾瀹冩搷浣溿��   
+                    // 鍙互灏唗able浼犲叆锛岄�氳繃getSelectedRow,getSelectColumn鏂规硶鑾峰彇鍒板綋鍓嶉�夋嫨鐨勮鍜屽垪鍙婂叾瀹冩搷浣滅瓑銆�   
                 }  
             });  
       
@@ -513,25 +516,25 @@ public class Account {
         {  
             this.panel = new JPanel();  
       
-            // panel使用绝对定位，这样button就不会充满整个单元格。   
+            // panel浣跨敤缁濆瀹氫綅锛岃繖鏍穊utton灏变笉浼氬厖婊℃暣涓崟鍏冩牸銆�   
             this.panel.setLayout(null);  
         }  
       
       
         /** 
-         * 这里重写父类的编辑方法，返回一个JPanel对象即可（也可以直接返回一个Button对象，但是那样会填充满整个单元格） 
+         * 杩欓噷閲嶅啓鐖剁被鐨勭紪杈戞柟娉曪紝杩斿洖涓�涓狫Panel瀵硅薄鍗冲彲锛堜篃鍙互鐩存帴杩斿洖涓�涓狟utton瀵硅薄锛屼絾鏄偅鏍蜂細濉厖婊℃暣涓崟鍏冩牸锛� 
          */  
         @Override  
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column)  
         {  
-            // 只为按钮赋值即可。也可以作其它操作。   
+            // 鍙负鎸夐挳璧嬪�煎嵆鍙�備篃鍙互浣滃叾瀹冩搷浣溿��   
             this.button.setText(value == null ? "" : String.valueOf(value));  
       
             return this.panel;  
         }  
       
         /** 
-         * 重写编辑单元格时获取的值。如果不重写，这里可能会为按钮设置错误的值。 
+         * 閲嶅啓缂栬緫鍗曞厓鏍兼椂鑾峰彇鐨勫�笺�傚鏋滀笉閲嶅啓锛岃繖閲屽彲鑳戒細涓烘寜閽缃敊璇殑鍊笺�� 
          */  
         @Override  
         public Object getCellEditorValue()  
