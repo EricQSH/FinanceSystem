@@ -14,6 +14,7 @@ import com.mysql.jdbc.Connection;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -118,6 +119,32 @@ public class Hi {
 							Transfer transfer=new Transfer(dbconn, userno);
 							transfer.frame.setVisible(true);
 							frame.setVisible(false);
+							
+							//CXJ:update balance for ledger assigned today before beginning to work
+							Date todaydate=new Date();
+							java.sql.Date date=new java.sql.Date(todaydate.getTime());
+							System.out.println(date);
+							ResultSet unrs=dbconn.Query(conn, "account WHERE date=CURDATE() and recorded=0");
+							while(unrs.next())
+							{
+								String voucherno=unrs.getString(1);
+								String account=unrs.getString(2);
+								double amount=unrs.getDouble(3);
+								int dc=unrs.getInt(4);
+								double signedamount=(dc==0)?amount:-amount;
+								//Date date=unrs.getDate(5);
+								System.out.println(account);
+								System.out.println(signedamount);
+								String sql_balance = "INSERT INTO balance(account,balance) VALUES(\""+account+"\","+signedamount+") ON DUPLICATE KEY UPDATE balance=balance+"+signedamount;
+							    dbconn.Update(dbconn.conn, sql_balance);
+							   
+								String sql_account_recorded="UPDATE account SET recorded=1 WHERE voucherNo=\""+voucherno+"\" and account=\""+account+"\"";
+								dbconn.Update(dbconn.conn, sql_account_recorded);
+							    System.out.println("this line updated!");
+								
+							}
+							
+							//CXJ
 							break;
 						}
 						else //System.out.print("Add a \"Wrong Password!\" dialog!\n");
